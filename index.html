@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Surprise 💐</title>
+<style>
+  *{box-sizing:border-box}
+  body{
+    margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+    font-family:Arial,sans-serif; background:linear-gradient(135deg,#ffe6f0,#fff7fb);
+    color:#4a2030; padding:20px; overflow:hidden;
+  }
+  .card{
+    width:min(430px,100%); background:rgba(255,255,255,.94); border-radius:28px;
+    padding:30px 24px; text-align:center; box-shadow:0 15px 45px rgba(120,40,70,.18);
+    position:relative; z-index:2;
+  }
+  h1{margin:5px 0 12px;font-size:29px}
+  p{font-size:17px;line-height:1.5}
+  button{
+    border:0; border-radius:999px; padding:13px 25px; margin:8px;
+    font-size:16px; cursor:pointer; transition:.2s; font-weight:bold;
+  }
+  button:hover{transform:scale(1.05)}
+  .yes{background:#ff5f91;color:white}.no{background:#f1dce4;color:#6b4050}
+  .next{background:#7d294d;color:white}
+  .hidden{display:none}
+  .bouquet{font-size:78px; margin:10px 0; animation:bloom 1s ease}
+  @keyframes bloom{0%{transform:scale(.2);opacity:0}100%{transform:scale(1);opacity:1}}
+  .heart{position:fixed;font-size:22px;animation:float 5s linear infinite;opacity:.7}
+  @keyframes float{from{transform:translateY(110vh) rotate(0)}to{transform:translateY(-20vh) rotate(360deg)}}
+  .small{font-size:13px;color:#8b6070}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div id="start">
+    <div style="font-size:55px">💌</div>
+    <h1>Hey, my love...</h1>
+    <p>I have a tiny surprise for you. But first, you have to answer a few questions. 🤭❤️</p>
+    <button class="yes" onclick="start()">I'm ready 💕</button>
+  </div>
+
+  <div id="quiz" class="hidden">
+    <div id="qnum" class="small"></div>
+    <h1 id="question"></h1>
+    <button class="yes" onclick="answer('yes')">YES 💗</button>
+    <button class="no" onclick="answer('no')">NO 🙈</button>
+  </div>
+
+  <div id="result" class="hidden">
+    <div class="bouquet">💐🌹🌷🌸</div>
+    <h1>These flowers are for you ❤️</h1>
+    <p>Because you deserve something beautiful, even if I can't hand you a real bouquet right now.</p>
+    <p><b>From Clifford, with love. 💕</b></p>
+    <div style="font-size:34px">🌹💗🌷💗🌸</div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  "Do you know you're special to me? 🥹",
+  "Do you smile whenever you see my name pop up? 🤭",
+  "Will you accept this little virtual bouquet? 💐",
+  "Can I keep making beautiful memories with you? ❤️"
+];
+let i=0;
+
+function start(){
+  document.getElementById("start").classList.add("hidden");
+  document.getElementById("quiz").classList.remove("hidden");
+  showQuestion();
+}
+function showQuestion(){
+  document.getElementById("qnum").textContent = `Question ${i+1} of ${questions.length}`;
+  document.getElementById("question").textContent = questions[i];
+}
+function answer(choice){
+  if(choice==="no" && i===2){
+    document.getElementById("question").textContent="Hmmmm 😭 Try again, my love. Will you accept them? 💐";
+    return;
+  }
+  i++;
+  if(i<questions.length) showQuestion();
+  else {
+    document.getElementById("quiz").classList.add("hidden");
+    document.getElementById("result").classList.remove("hidden");
+    for(let n=0;n<14;n++){
+      const h=document.createElement("div");
+      h.className="heart"; h.textContent=["❤️","💗","🌸","💐"][n%4];
+      h.style.left=Math.random()*100+"vw";
+      h.style.animationDelay=Math.random()*4+"s";
+      document.body.appendChild(h);
+    }
+  }
+}
+</script>
+</body>
+</html>
